@@ -1,12 +1,13 @@
 import React, { ButtonHTMLAttributes, useState } from "react";
 
 export default function Exchanger() {
-  const [amount, setAmount] = useState("1");
+  const [amount, setAmount] = useState<number | null>(null);
   const [fromCurrency, setFromCurrency] = useState("EUR");
   const [toCurrency, setToCurrency] = useState("USD");
+  const [exchangedVal, setExchangedVal] = useState(0);
 
   function amountChange(e: React.FormEvent<HTMLInputElement>) {
-    setAmount(e.currentTarget.value);
+    setAmount(Number(e.currentTarget.value));
     console.log(amount);
   }
 
@@ -20,16 +21,23 @@ export default function Exchanger() {
     console.log(toCurrency);
   }
 
-  function exchange(fromCurrency: string, toCurrency: string) {
+  function exchange(fromCurrency: string, toCurrency: string, amount: number) {
     let link = `https://api.exchangeratesapi.io/latest?base=${fromCurrency}&symbols=${toCurrency}`;
     fetch(link)
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      //.then((data) => console.log(data.rates[toCurrency]));
+      .then((data) => {
+        return amount * data.rates[toCurrency];
+      })
+      .then((calculatedVal) => setExchangedVal(calculatedVal));
   }
 
   function handleClick(event: React.MouseEvent) {
     event.preventDefault();
-    exchange(fromCurrency, toCurrency);
+    if (amount === null) {
+      return;
+    }
+    exchange(fromCurrency, toCurrency, amount);
   }
 
   return (
@@ -40,7 +48,7 @@ export default function Exchanger() {
           <input
             name="amount"
             type="number"
-            value={amount}
+            value={amount || undefined}
             onChange={amountChange}
           />
         </label>
@@ -65,7 +73,7 @@ export default function Exchanger() {
         <button onClick={handleClick}>Exchange!</button>
       </form>
       <p>
-        {amount} {fromCurrency} = something {toCurrency}
+        {amount} {fromCurrency} = {exchangedVal} {toCurrency}
       </p>
     </div>
   );
