@@ -1,3 +1,5 @@
+//custom hook
+
 import { useEffect, useState } from "react";
 import { api, Currency } from "../api";
 
