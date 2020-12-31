@@ -7,17 +7,12 @@ export default function Exchanger() {
     <div>
       <form>
         <label>
-          Amount:
           <input
             name="amount"
             type="number"
             value={echangedValues.amount || undefined}
             onChange={echangedValues.amountChange}
           />
-        </label>
-        <br />
-        <label>
-          From:
           <select
             value={echangedValues.fromCurrency}
             onChange={echangedValues.fromChange}
@@ -27,8 +22,14 @@ export default function Exchanger() {
             <option value="PLN">PLN</option>
           </select>
         </label>
+        <br />
         <label>
-          To:
+          <input
+            name="amount"
+            type="number"
+            value={echangedValues.amount || undefined}
+            onChange={echangedValues.amountChange}
+          />
           <select
             value={echangedValues.toCurrency}
             onChange={echangedValues.toChange}
