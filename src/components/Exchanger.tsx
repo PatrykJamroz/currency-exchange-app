@@ -43,7 +43,7 @@ export default function Exchanger() {
       </form>
       <h3>
         {echangedValues.amount} {echangedValues.fromCurrency} ={" "}
-        {echangedValues.exchangedAmount} {echangedValues.toCurrency}
+        {echangedValues.exchangedAmount?.toFixed(4)} {echangedValues.toCurrency}
       </h3>
       <p>date: {echangedValues.date}</p>
       <p>
