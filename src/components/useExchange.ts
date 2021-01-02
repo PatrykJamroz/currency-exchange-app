@@ -4,43 +4,65 @@ import { useEffect, useState } from "react";
 import { api, Currency } from "../api";
 
 export function useExchange() {
-  const [amount, setAmount] = useState<number | null>(null);
-  const [fromCurrency, setFromCurrency] = useState<Currency>("EUR");
-  const [toCurrency, setToCurrency] = useState<Currency>("USD");
+  const [inputOne, setinputOne] = useState<number | null>(null);
+  const [inputTwo, setinputTwo] = useState<number | null>(null);
+  const [currencyOne, setCurrencyOne] = useState<Currency>("EUR");
+  const [currencyTwo, setCurrencyTwo] = useState<Currency>("USD");
   const [rate, setRate] = useState(1);
   const [date, setDate] = useState("");
+  const [inputOneChanged, setInputOneChanged] = useState<Boolean>(false);
+  const [inputTwoChanged, setInputTwoChanged] = useState<Boolean>(false);
 
   useEffect(() => {
     getRates();
-  }, [toCurrency, fromCurrency]);
+  }, [currencyOne, currencyTwo]);
 
-  function amountChange(e: React.FormEvent<HTMLInputElement>) {
-    setAmount(Number(e.currentTarget.value));
+  function inputOneChange(e: React.FormEvent<HTMLInputElement>) {
+    setinputOne(Number(e.currentTarget.value));
+    setInputOneChanged(true);
   }
 
-  function fromChange(e: React.FormEvent<HTMLSelectElement>) {
-    setFromCurrency(e.currentTarget.value as Currency);
+  function inputTwoChange(e: React.FormEvent<HTMLInputElement>) {
+    setinputTwo(Number(e.currentTarget.value));
+    setInputOneChanged(false);
   }
 
-  function toChange(e: React.FormEvent<HTMLSelectElement>) {
-    setToCurrency(e.currentTarget.value as Currency);
+  function currencyOneChange(e: React.FormEvent<HTMLSelectElement>) {
+    setCurrencyOne(e.currentTarget.value as Currency);
+  }
+
+  function currencyTwoChange(e: React.FormEvent<HTMLSelectElement>) {
+    setCurrencyTwo(e.currentTarget.value as Currency);
   }
 
   async function getRates() {
-    const data = await api(fromCurrency, toCurrency);
-    setRate(data.rates[toCurrency]);
+    const data = await api(currencyOne, currencyTwo);
+    setRate(data.rates[currencyTwo]);
     setDate(data.date);
   }
 
-  const exchangedAmount = amount !== null ? amount * rate : null;
+  let exchangedAmount: number | null;
+
+  if (inputOneChanged) {
+    exchangedAmount = inputOne !== null ? inputOne * rate : null;
+  } else {
+    exchangedAmount = inputTwo !== null ? inputTwo / rate : null;
+  }
+
+  //const exchangedAmountRev = inputTwo !== null ? inputTwo / rate : null;
+  //const exchangedAmount = inputOne !== null ? inputOne * rate : null;
   return {
-    toChange,
-    fromChange,
-    amount,
-    fromCurrency,
-    toCurrency,
+    currencyOneChange,
+    currencyTwoChange,
+    inputOne,
+    inputTwo,
+    currencyOne,
+    currencyTwo,
     exchangedAmount,
-    amountChange,
+    inputOneChange,
+    inputTwoChange,
     date,
+    inputOneChanged,
+    inputTwoChanged,
   };
 }
