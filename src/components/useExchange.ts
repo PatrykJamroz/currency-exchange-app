@@ -11,7 +11,6 @@ export function useExchange() {
   const [rate, setRate] = useState(1);
   const [date, setDate] = useState("");
   const [inputOneChanged, setInputOneChanged] = useState<Boolean>(false);
-  const [inputTwoChanged, setInputTwoChanged] = useState<Boolean>(false);
 
   useEffect(() => {
     getRates();
@@ -51,8 +50,6 @@ export function useExchange() {
       inputTwo !== null ? parseFloat((inputTwo / rate).toFixed(4)) : null;
   }
 
-  //const exchangedAmountRev = inputTwo !== null ? inputTwo / rate : null;
-  //const exchangedAmount = inputOne !== null ? inputOne * rate : null;
   return {
     currencyOneChange,
     currencyTwoChange,
@@ -65,6 +62,5 @@ export function useExchange() {
     inputTwoChange,
     date,
     inputOneChanged,
-    inputTwoChanged,
   };
 }
