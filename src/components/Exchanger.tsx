@@ -10,7 +10,11 @@ export default function Exchanger() {
           <input
             name="inputOne"
             type="number"
-            value={exchangedValues.inputOne || undefined}
+            value={
+              exchangedValues.inputOneChanged
+                ? exchangedValues.inputOne || undefined
+                : exchangedValues.exchangedAmount || undefined
+            }
             onChange={exchangedValues.inputOneChange}
           />
           <select
@@ -27,7 +31,11 @@ export default function Exchanger() {
           <input
             name="inputTwo"
             type="number"
-            value={exchangedValues.inputTwo || undefined}
+            value={
+              !exchangedValues.inputOneChanged
+                ? exchangedValues.inputTwo || undefined
+                : exchangedValues.exchangedAmount || undefined
+            }
             onChange={exchangedValues.inputTwoChange}
           />
           <select

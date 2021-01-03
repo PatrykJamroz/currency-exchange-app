@@ -44,9 +44,11 @@ export function useExchange() {
   let exchangedAmount: number | null;
 
   if (inputOneChanged) {
-    exchangedAmount = inputOne !== null ? inputOne * rate : null;
+    exchangedAmount =
+      inputOne !== null ? parseFloat((inputOne * rate).toFixed(4)) : null;
   } else {
-    exchangedAmount = inputTwo !== null ? inputTwo / rate : null;
+    exchangedAmount =
+      inputTwo !== null ? parseFloat((inputTwo / rate).toFixed(4)) : null;
   }
 
   //const exchangedAmountRev = inputTwo !== null ? inputTwo / rate : null;
