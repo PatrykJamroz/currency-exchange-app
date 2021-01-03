@@ -52,9 +52,9 @@ export default function Exchanger() {
       <h3>
         {exchangedValues.inputOneChanged
           ? `${exchangedValues.inputOne} ${exchangedValues.currencyOne} =${" "}
-        ${exchangedValues.exchangedAmount?.toFixed(4)}${" "}
+        ${exchangedValues.exchangedAmount}${" "}
         ${exchangedValues.currencyTwo}`
-          : `${exchangedValues.exchangedAmount?.toFixed(4)} ${
+          : `${exchangedValues.exchangedAmount} ${
               exchangedValues.currencyOne
             } =${" "}
         ${exchangedValues.inputTwo}${" "}
