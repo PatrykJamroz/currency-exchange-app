@@ -2,12 +2,12 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import { useExchange } from "./useExchange";
 
 describe("useExchange", () => {
-  it("change amount", () => {
+  it("change inputOne", () => {
     const { result } = renderHook(() => useExchange());
     act(() => {
-      result.current.amountChange({ currentTarget: { value: "15" } } as any);
+      result.current.inputOneChange({ currentTarget: { value: "15" } } as any);
     });
 
-    expect(result.current.amount).toBe(15);
+    expect(result.current.inputOne).toBe(15);
   });
 });

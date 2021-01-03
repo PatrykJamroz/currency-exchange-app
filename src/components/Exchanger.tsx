@@ -2,20 +2,24 @@ import React, { ButtonHTMLAttributes, useState } from "react";
 import { useExchange } from "./useExchange"; //custom hook
 
 export default function Exchanger() {
-  const echangedValues = useExchange();
+  const exchangedValues = useExchange();
   return (
     <div>
       <form>
         <label>
           <input
-            name="amount"
+            name="inputOne"
             type="number"
-            value={echangedValues.amount || undefined}
-            onChange={echangedValues.amountChange}
+            value={
+              exchangedValues.inputOneChanged
+                ? exchangedValues.inputOne || undefined
+                : exchangedValues.exchangedAmount || undefined
+            }
+            onChange={exchangedValues.inputOneChange}
           />
           <select
-            value={echangedValues.fromCurrency}
-            onChange={echangedValues.fromChange}
+            value={exchangedValues.currencyOne}
+            onChange={exchangedValues.currencyOneChange}
           >
             <option value="EUR">EUR</option>
             <option value="USD">USD</option>
@@ -25,14 +29,18 @@ export default function Exchanger() {
         <br />
         <label>
           <input
-            name="amount"
+            name="inputTwo"
             type="number"
-            value={echangedValues.amount || undefined}
-            onChange={echangedValues.amountChange}
+            value={
+              !exchangedValues.inputOneChanged
+                ? exchangedValues.inputTwo || undefined
+                : exchangedValues.exchangedAmount || undefined
+            }
+            onChange={exchangedValues.inputTwoChange}
           />
           <select
-            value={echangedValues.toCurrency}
-            onChange={echangedValues.toChange}
+            value={exchangedValues.currencyTwo}
+            onChange={exchangedValues.currencyTwoChange}
           >
             <option value="USD">USD</option>
             <option value="PLN">PLN</option>
@@ -42,10 +50,17 @@ export default function Exchanger() {
         <br />
       </form>
       <h3>
-        {echangedValues.amount} {echangedValues.fromCurrency} ={" "}
-        {echangedValues.exchangedAmount?.toFixed(4)} {echangedValues.toCurrency}
+        {exchangedValues.inputOneChanged
+          ? `${exchangedValues.inputOne} ${exchangedValues.currencyOne} =${" "}
+        ${exchangedValues.exchangedAmount?.toFixed(4)}${" "}
+        ${exchangedValues.currencyTwo}`
+          : `${exchangedValues.exchangedAmount?.toFixed(4)} ${
+              exchangedValues.currencyOne
+            } =${" "}
+        ${exchangedValues.inputTwo}${" "}
+        ${exchangedValues.currencyTwo}`}
       </h3>
-      <p>date: {echangedValues.date}</p>
+      <p>date: {exchangedValues.date}</p>
       <p>
         source: <a href="https://exchangeratesapi.io/">exchangeratesapi</a>
       </p>
