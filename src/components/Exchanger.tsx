@@ -5,29 +5,37 @@ export default function Exchanger() {
   const exchangedValues = useExchange();
   return (
     <div className="border-2 border-black border-solid mx-auto flex flex-wrap">
-      <div className="w-full md:w-1/2 border-2 border-yellow-500 border-solid">
-        <h3>
-          {exchangedValues.inputOneChanged
-            ? `${exchangedValues.inputOne} ${
-                exchangedValues.currencyOne
-              } equals${" "}
+      <div className="w-full md:w-1/2 border-2 border-purple-500 border-solid pl-10">
+        <div
+          style={
+            exchangedValues.inputOne !== null
+              ? { display: "block" }
+              : { display: "none" }
+          }
+        >
+          <h3>
+            {exchangedValues.inputOneChanged
+              ? `${exchangedValues.inputOne} ${
+                  exchangedValues.currencyOne
+                } equals${" "}
         ${exchangedValues.exchangedAmount}${" "}
         ${exchangedValues.currencyTwo}`
-            : `${exchangedValues.exchangedAmount} ${
-                exchangedValues.currencyOne
-              } equals${" "}
+              : `${exchangedValues.exchangedAmount} ${
+                  exchangedValues.currencyOne
+                } equals${" "}
         ${exchangedValues.inputTwo}${" "}
         ${exchangedValues.currencyTwo}`}
-        </h3>
-        <p>
-          {new Date(exchangedValues.date).toLocaleDateString([], {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          })}
-        </p>
-        <form>
-          <div>
+          </h3>
+          <p>
+            {new Date(exchangedValues.date).toLocaleDateString([], {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+        </div>
+        <form className="">
+          <div className="">
             <input
               name="inputOne"
               type="number"
@@ -78,7 +86,10 @@ export default function Exchanger() {
         </p>
       </div>
       <div className="w-full md:w-1/2 border-2 border-blue-500 border-solid">
-        <img src="https://lh3.googleusercontent.com/proxy/INXF_qat3fztEHfb2tat738L-DDhmO8PwVNzcOjfnfs2vcJYwJXfCvIqsejNeNF0JnYNWqc0JDveqfFbDxbUwlr8jYb7DsPYTEClfI0_GTqdvOcP1wyrtrBmApJySZgk3SUTm72b9ad1BeVziPFueGniNiVcWA" />
+        <img
+          src="https://www.macrotrends.net/assets/images/large/euro-dollar-exchange-rate-historical-chart.png"
+          className="h-56"
+        />
       </div>
     </div>
   );
