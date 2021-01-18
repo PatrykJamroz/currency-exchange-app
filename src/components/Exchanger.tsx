@@ -1,69 +1,109 @@
-import React, { ButtonHTMLAttributes, useState } from "react";
-import { useExchange } from "./useExchange"; //custom hook
+import { useExchange } from "./useExchange";
+import "../index.css";
 
 export default function Exchanger() {
   const exchangedValues = useExchange();
   return (
-    <div>
-      <form>
-        <label>
-          <input
-            name="inputOne"
-            type="number"
-            value={
-              exchangedValues.inputOneChanged
-                ? exchangedValues.inputOne || undefined
-                : exchangedValues.exchangedAmount || undefined
+    <div className="container border-2 border-black border-solid mx-auto inline-flex flex-wrap">
+      <div className="w-full md:w-1/2 inline-flex border-2 border-purple-500 border-solid">
+        <div className="mx-auto w-10/12 mt-5 md:pl-1.5 border-2 border-green-500 border-solid">
+          <div
+            style={
+              exchangedValues.inputOne !== null
+                ? { display: "block" }
+                : { display: "none" }
             }
-            onChange={exchangedValues.inputOneChange}
-          />
-          <select
-            value={exchangedValues.currencyOne}
-            onChange={exchangedValues.currencyOneChange}
+            className=""
           >
-            <option value="EUR">EUR</option>
-            <option value="USD">USD</option>
-            <option value="PLN">PLN</option>
-          </select>
-        </label>
-        <br />
-        <label>
-          <input
-            name="inputTwo"
-            type="number"
-            value={
-              !exchangedValues.inputOneChanged
-                ? exchangedValues.inputTwo || undefined
-                : exchangedValues.exchangedAmount || undefined
-            }
-            onChange={exchangedValues.inputTwoChange}
-          />
-          <select
-            value={exchangedValues.currencyTwo}
-            onChange={exchangedValues.currencyTwoChange}
-          >
-            <option value="USD">USD</option>
-            <option value="PLN">PLN</option>
-            <option value="EUR">EUR</option>
-          </select>
-        </label>
-        <br />
-      </form>
-      <h3>
-        {exchangedValues.inputOneChanged
-          ? `${exchangedValues.inputOne} ${exchangedValues.currencyOne} =${" "}
+            <h3 className="font-semibold text-xl">
+              {exchangedValues.inputOneChanged
+                ? `${exchangedValues.inputOne} ${
+                    exchangedValues.currencyOne
+                  } equals${" "}
         ${exchangedValues.exchangedAmount}${" "}
         ${exchangedValues.currencyTwo}`
-          : `${exchangedValues.exchangedAmount} ${
-              exchangedValues.currencyOne
-            } =${" "}
+                : `${exchangedValues.exchangedAmount} ${
+                    exchangedValues.currencyOne
+                  } equals${" "}
         ${exchangedValues.inputTwo}${" "}
         ${exchangedValues.currencyTwo}`}
-      </h3>
-      <p>date: {exchangedValues.date}</p>
-      <p>
-        source: <a href="https://exchangeratesapi.io/">exchangeratesapi</a>
-      </p>
+            </h3>
+            <p className="font-thin text-xs">
+              {new Date(exchangedValues.date).toLocaleDateString([], {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })}
+            </p>
+          </div>
+          <form
+            className="mt-2"
+            style={
+              exchangedValues.inputOne !== null
+                ? { paddingTop: 0 }
+                : { paddingTop: 47.36 }
+            }
+          >
+            <div className="container mx-auto">
+              <input
+                name="inputOne"
+                type="number"
+                value={
+                  exchangedValues.inputOneChanged
+                    ? exchangedValues.inputOne || undefined
+                    : exchangedValues.exchangedAmount || undefined
+                }
+                onChange={exchangedValues.inputOneChange}
+                placeholder="0"
+                className="w-36 rounded-lg mr-2"
+                autoFocus
+              />
+              <select
+                value={exchangedValues.currencyOne}
+                onChange={exchangedValues.currencyOneChange}
+                className="w-36 rounded-lg"
+              >
+                <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+                <option value="PLN">PLN</option>
+              </select>
+            </div>
+            <div className="mt-2">
+              <input
+                name="inputTwo"
+                type="number"
+                value={
+                  !exchangedValues.inputOneChanged
+                    ? exchangedValues.inputTwo || undefined
+                    : exchangedValues.exchangedAmount || undefined
+                }
+                onChange={exchangedValues.inputTwoChange}
+                placeholder="0"
+                className="w-36 rounded-lg mr-2"
+              />
+              <select
+                value={exchangedValues.currencyTwo}
+                onChange={exchangedValues.currencyTwoChange}
+                className="w-36 rounded-lg"
+              >
+                <option value="USD">USD</option>
+                <option value="PLN">PLN</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </div>
+          </form>
+
+          <p className="mt-4 font-thin text-xs">
+            source: <a href="https://exchangeratesapi.io/">exchangeratesapi</a>
+          </p>
+        </div>
+      </div>
+      <div className="w-full md:w-1/2 border-2 border-blue-500 border-solid">
+        <img
+          src="https://www.macrotrends.net/assets/images/large/euro-dollar-exchange-rate-historical-chart.png"
+          className="h-56"
+        />
+      </div>
     </div>
   );
 }
