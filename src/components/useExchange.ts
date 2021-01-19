@@ -12,7 +12,7 @@ export function useExchange() {
   const [rate, setRate] = useState(1);
   const [date, setDate] = useState("");
   const [inputOneChanged, setInputOneChanged] = useState<Boolean>(false);
-  const [startDate, setStartDate] = useState<string>("2020-01-01"); //YYYY-MM-DD, will be changed depending on period
+  const [startDate, setStartDate] = useState<string>("2021-01-01"); //YYYY-MM-DD, will be changed depending on period
   const todayDate: string = new Date()
     .toISOString()
     .replace(/T.*/, "")
