@@ -63,9 +63,30 @@ export default function Exchanger() {
                 onChange={exchangedValues.currencyOneChange}
                 className="w-36 rounded-lg"
               >
-                <option value="EUR">EUR</option>
-                <option value="USD">USD</option>
-                <option value="PLN">PLN</option>
+                <option
+                  value="EUR"
+                  disabled={
+                    exchangedValues.currencyTwo === "EUR" ? true : false
+                  }
+                >
+                  EUR
+                </option>
+                <option
+                  value="USD"
+                  disabled={
+                    exchangedValues.currencyTwo === "USD" ? true : false
+                  }
+                >
+                  USD
+                </option>
+                <option
+                  value="PLN"
+                  disabled={
+                    exchangedValues.currencyTwo === "PLN" ? true : false
+                  }
+                >
+                  PLN
+                </option>
               </select>
             </div>
             <div className="mt-2">
@@ -86,9 +107,30 @@ export default function Exchanger() {
                 onChange={exchangedValues.currencyTwoChange}
                 className="w-36 rounded-lg"
               >
-                <option value="USD">USD</option>
-                <option value="PLN">PLN</option>
-                <option value="EUR">EUR</option>
+                <option
+                  value="USD"
+                  disabled={
+                    exchangedValues.currencyOne === "USD" ? true : false
+                  }
+                >
+                  USD
+                </option>
+                <option
+                  value="PLN"
+                  disabled={
+                    exchangedValues.currencyOne === "PLN" ? true : false
+                  }
+                >
+                  PLN
+                </option>
+                <option
+                  value="EUR"
+                  disabled={
+                    exchangedValues.currencyOne === "EUR" ? true : false
+                  }
+                >
+                  EUR
+                </option>
               </select>
             </div>
           </form>
