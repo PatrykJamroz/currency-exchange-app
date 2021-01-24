@@ -20,6 +20,40 @@ export function useExchange() {
     .split("-")
     .join("-");
 
+  function handleStartDate(event: React.MouseEvent<HTMLElement>): void {
+    event.preventDefault();
+    const buttonVal = (event.target as HTMLInputElement).value;
+    switch (buttonVal) {
+      case "week":
+        setStartDate(
+          new Date(Date.now() - 604800000)
+            .toISOString()
+            .replace(/T.*/, "")
+            .split("-")
+            .join("-")
+        );
+        break;
+      case "month":
+        setStartDate(
+          new Date(Date.now() - 2629800000)
+            .toISOString()
+            .replace(/T.*/, "")
+            .split("-")
+            .join("-")
+        );
+        break;
+      case "year":
+        setStartDate(
+          new Date(Date.now() - 31557600000)
+            .toISOString()
+            .replace(/T.*/, "")
+            .split("-")
+            .join("-")
+        );
+        break;
+    }
+  }
+
   interface ProcessData {
     date: string;
     rate: number;
@@ -27,7 +61,7 @@ export function useExchange() {
 
   useEffect(() => {
     getRates();
-  }, [currencyOne, currencyTwo]);
+  }, [currencyOne, currencyTwo, startDate]);
 
   function inputOneChange(e: React.FormEvent<HTMLInputElement>) {
     setinputOne(Number(e.currentTarget.value));
@@ -49,8 +83,6 @@ export function useExchange() {
 
   type Rates = Record<Currency, number>;
 
-  //let sortedArrOfObj: { date: string; rate: number }[] = [];
-
   function processData(data: Record<string, Rates>) {
     const sortedArrOfObj = Object.entries(data)
       .map(([key, value]) => ({
@@ -64,17 +96,12 @@ export function useExchange() {
       });
     setRate(sortedArrOfObj[sortedArrOfObj.length - 1].rate);
     setDate(sortedArrOfObj[sortedArrOfObj.length - 1].date);
-    //console.log(sortedArrOfObj);
     setprocessedData(sortedArrOfObj);
-    //console.log(processedData);
   }
 
   async function getRates() {
     const data = await api(currencyOne, currencyTwo, startDate, todayDate);
     processData(data.rates); //object of objects: {"2020-12-03":{"EUR":0.2235486106},"2020-12-23":{"EUR":0.222098834},...
-    //console.log(sortedArrOfObj);
-    //setRate(data.rates[currencyTwo]);
-    //setDate(data.date);
   }
 
   let exchangedAmount: number | null;
@@ -101,5 +128,6 @@ export function useExchange() {
     inputOneChanged,
     processedData,
     processData,
+    handleStartDate,
   };
 }
