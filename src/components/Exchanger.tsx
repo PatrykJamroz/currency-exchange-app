@@ -5,7 +5,7 @@ import { stringify } from "postcss";
 
 export default function Exchanger() {
   const exchangedValues = useExchange();
-  console.log(exchangedValues.processedData);
+  //console.log(exchangedValues.processedData);
   return (
     <div className="container border-2 border-black border-solid mx-auto inline-flex flex-wrap">
       <div className="w-full md:w-1/2 inline-flex border-2 border-purple-500 border-solid">
@@ -145,6 +145,29 @@ export default function Exchanger() {
       </div>
       <div className="w-full md:w-1/2 border-2 border-blue-500 border-solid">
         <Chart data={exchangedValues.processedData} />
+        <div className="mx-auto">
+          <div className="border-2 border-black-500 border-solid inline ml-10">
+            <input
+              type="button"
+              value="week"
+              onClick={exchangedValues.handleStartDate}
+            />
+          </div>
+          <div className="border-2 border-black-500 border-solid inline ml-10">
+            <input
+              type="button"
+              value="month"
+              onClick={exchangedValues.handleStartDate}
+            />
+          </div>
+          <div className="border-2 border-black-500 border-solid inline ml-10">
+            <input
+              type="button"
+              value="year"
+              onClick={exchangedValues.handleStartDate}
+            />
+          </div>
+        </div>
       </div>
       <div>
         {exchangedValues.processedData.map((data) => (
