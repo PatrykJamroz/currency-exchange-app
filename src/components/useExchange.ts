@@ -11,6 +11,7 @@ export function useExchange() {
   const [currencyTwo, setCurrencyTwo] = useState<Currency>("USD");
   const [rate, setRate] = useState(1);
   const [date, setDate] = useState("");
+  const [processedData, setprocessedData] = useState<ProcessData[]>([]);
   const [inputOneChanged, setInputOneChanged] = useState<Boolean>(false);
   const [startDate, setStartDate] = useState<string>("2021-01-01"); //YYYY-MM-DD, will be changed depending on period
   const todayDate: string = new Date()
@@ -18,6 +19,11 @@ export function useExchange() {
     .replace(/T.*/, "")
     .split("-")
     .join("-");
+
+  interface ProcessData {
+    date: string;
+    rate: number;
+  }
 
   useEffect(() => {
     getRates();
@@ -43,8 +49,10 @@ export function useExchange() {
 
   type Rates = Record<Currency, number>;
 
+  //let sortedArrOfObj: { date: string; rate: number }[] = [];
+
   function processData(data: Record<string, Rates>) {
-    let sortedArrOfObj = Object.entries(data)
+    const sortedArrOfObj = Object.entries(data)
       .map(([key, value]) => ({
         date: key,
         rate: value[currencyTwo],
@@ -56,11 +64,15 @@ export function useExchange() {
       });
     setRate(sortedArrOfObj[sortedArrOfObj.length - 1].rate);
     setDate(sortedArrOfObj[sortedArrOfObj.length - 1].date);
+    //console.log(sortedArrOfObj);
+    setprocessedData(sortedArrOfObj);
+    //console.log(processedData);
   }
 
   async function getRates() {
     const data = await api(currencyOne, currencyTwo, startDate, todayDate);
     processData(data.rates); //object of objects: {"2020-12-03":{"EUR":0.2235486106},"2020-12-23":{"EUR":0.222098834},...
+    //console.log(sortedArrOfObj);
     //setRate(data.rates[currencyTwo]);
     //setDate(data.date);
   }
@@ -87,5 +99,7 @@ export function useExchange() {
     inputTwoChange,
     date,
     inputOneChanged,
+    processedData,
+    processData,
   };
 }

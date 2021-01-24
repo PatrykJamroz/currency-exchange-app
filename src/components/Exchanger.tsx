@@ -1,8 +1,11 @@
 import { useExchange } from "./useExchange";
+import Chart from "./Chart";
 import "../index.css";
+import { stringify } from "postcss";
 
 export default function Exchanger() {
   const exchangedValues = useExchange();
+  console.log(exchangedValues.processedData);
   return (
     <div className="container border-2 border-black border-solid mx-auto inline-flex flex-wrap">
       <div className="w-full md:w-1/2 inline-flex border-2 border-purple-500 border-solid">
@@ -141,10 +144,14 @@ export default function Exchanger() {
         </div>
       </div>
       <div className="w-full md:w-1/2 border-2 border-blue-500 border-solid">
-        <img
-          src="https://www.macrotrends.net/assets/images/large/euro-dollar-exchange-rate-historical-chart.png"
-          className="h-56"
-        />
+        <Chart data={exchangedValues.processedData} />
+      </div>
+      <div>
+        {exchangedValues.processedData.map((data) => (
+          <p>
+            {data.date}: {data.rate}
+          </p>
+        ))}
       </div>
     </div>
   );

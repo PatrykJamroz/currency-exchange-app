@@ -1,6 +1,6 @@
 export type Currency = "USD" | "EUR" | "PLN";
 
-type Rates = Record<Currency, number>;
+export type Rates = Record<Currency, number>;
 
 interface ApiResponse {
   base: Currency;
