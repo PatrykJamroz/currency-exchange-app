@@ -144,7 +144,9 @@ export default function Exchanger() {
         </div>
       </div>
       <div className="w-full md:w-1/2 border-2 border-blue-500 border-solid">
-        <Chart data={exchangedValues.processedData} />
+        <div className="border-2 border-solid border-red-500">
+          <Chart data={exchangedValues.processedData} />
+        </div>
         <div className="mx-auto">
           <div className="border-2 border-black-500 border-solid inline ml-10">
             <input
