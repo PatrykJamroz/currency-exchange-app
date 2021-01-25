@@ -2,6 +2,7 @@ import { useExchange } from "./useExchange";
 import Chart from "./Chart";
 import "../index.css";
 import { stringify } from "postcss";
+import { getAutomaticTypeDirectiveNames } from "typescript";
 
 export default function Exchanger() {
   const exchangedValues = useExchange();
@@ -32,7 +33,7 @@ export default function Exchanger() {
         ${exchangedValues.currencyTwo}`}
             </h3>
             <p className="font-thin text-xs">
-              {new Date(exchangedValues.date).toLocaleDateString([], {
+              {new Date(exchangedValues.date).toLocaleDateString("en-GB", {
                 day: "2-digit",
                 month: "long",
                 year: "numeric",
@@ -144,34 +145,41 @@ export default function Exchanger() {
         </div>
       </div>
       <div className="w-full md:w-1/2 border-2 border-blue-500 border-solid">
-        <div className="border-2 border-solid border-red-500">
-          <Chart data={exchangedValues.processedData} />
+        <div className="border-2 border-solid border-red-500 mt-4">
+          <Chart
+            data={exchangedValues.processedData}
+            className="border-solid border-yellow-500"
+          />
         </div>
-        <div className="mx-auto">
-          <div className="border-2 border-black-500 border-solid inline ml-10">
+        <div className="border-2 border-solid border-yellow-500 grid grid-cols-3 gap-2 w-60 mx-auto text-white">
+          <div className="border-2 border-black-500 border-solid inline">
             <input
               type="button"
               value="week"
               onClick={exchangedValues.handleStartDate}
+              className="w-full bg-black"
             />
           </div>
-          <div className="border-2 border-black-500 border-solid inline ml-10">
+          <div className="border-2 border-black-500 border-solid inline">
             <input
               type="button"
               value="month"
               onClick={exchangedValues.handleStartDate}
+              className="w-full bg-black"
             />
           </div>
-          <div className="border-2 border-black-500 border-solid inline ml-10">
+          <div className="border-2 border-black-500 border-solid inline ">
             <input
               type="button"
               value="year"
               onClick={exchangedValues.handleStartDate}
+              className="w-full bg-black"
             />
           </div>
         </div>
       </div>
       <div>
+        <h1>Rates history</h1>
         {exchangedValues.processedData.map((data) => (
           <p>
             {data.date}: {data.rate}

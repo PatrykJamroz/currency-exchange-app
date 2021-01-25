@@ -13,7 +13,13 @@ export function useExchange() {
   const [date, setDate] = useState("");
   const [processedData, setprocessedData] = useState<ProcessData[]>([]);
   const [inputOneChanged, setInputOneChanged] = useState<Boolean>(false);
-  const [startDate, setStartDate] = useState<string>("2021-01-01"); //YYYY-MM-DD, will be changed depending on period
+  const [startDate, setStartDate] = useState<string>(
+    new Date(Date.now() - 604800000)
+      .toISOString()
+      .replace(/T.*/, "")
+      .split("-")
+      .join("-")
+  ); //YYYY-MM-DD, will be changed depending on period
   const todayDate: string = new Date()
     .toISOString()
     .replace(/T.*/, "")
