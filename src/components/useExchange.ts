@@ -135,5 +135,6 @@ export function useExchange() {
     processedData,
     processData,
     handleStartDate,
+    startDate,
   };
 }

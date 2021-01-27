@@ -145,7 +145,7 @@ export default function Exchanger() {
         </div>
       </div>
       <div className="w-full md:w-1/2 border-2 border-blue-500 border-solid">
-        <div className="border-2 border-solid border-red-500 mt-4">
+        <div className="border-2 border-solid border-red-500 mt-5">
           <Chart
             data={exchangedValues.processedData}
             className="border-solid border-yellow-500"
@@ -178,11 +178,30 @@ export default function Exchanger() {
           </div>
         </div>
       </div>
-      <div>
-        <h1>Rates history</h1>
+      <div className="ml-10 mr-5 mt-1">
+        <h1 className="">
+          Rates history between{" "}
+          {new Date(exchangedValues.startDate).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}{" "}
+          and{" "}
+          {new Date(exchangedValues.date).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}
+          :
+        </h1>
         {exchangedValues.processedData.map((data) => (
           <p>
-            {data.date}: {data.rate}
+            {new Date(data.date).toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            })}
+            : {data.rate.toFixed(4)}
           </p>
         ))}
       </div>
