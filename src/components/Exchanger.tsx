@@ -1,8 +1,12 @@
 import { useExchange } from "./useExchange";
+import Chart from "./Chart";
 import "../index.css";
+import { stringify } from "postcss";
+import { getAutomaticTypeDirectiveNames } from "typescript";
 
 export default function Exchanger() {
   const exchangedValues = useExchange();
+  //console.log(exchangedValues.processedData);
   return (
     <div className="container border-2 border-black border-solid mx-auto inline-flex flex-wrap">
       <div className="w-full md:w-1/2 inline-flex border-2 border-purple-500 border-solid">
@@ -29,7 +33,7 @@ export default function Exchanger() {
         ${exchangedValues.currencyTwo}`}
             </h3>
             <p className="font-thin text-xs">
-              {new Date(exchangedValues.date).toLocaleDateString([], {
+              {new Date(exchangedValues.date).toLocaleDateString("en-GB", {
                 day: "2-digit",
                 month: "long",
                 year: "numeric",
@@ -141,10 +145,65 @@ export default function Exchanger() {
         </div>
       </div>
       <div className="w-full md:w-1/2 border-2 border-blue-500 border-solid">
-        <img
-          src="https://www.macrotrends.net/assets/images/large/euro-dollar-exchange-rate-historical-chart.png"
-          className="h-56"
-        />
+        <div className="border-2 border-solid border-red-500 mt-5">
+          <Chart
+            data={exchangedValues.processedData}
+            className="border-solid border-yellow-500"
+          />
+        </div>
+        <div className="border-2 border-solid border-yellow-500 grid grid-cols-3 gap-2 w-60 mx-auto text-white">
+          <div className="border-2 border-black-500 border-solid inline">
+            <input
+              type="button"
+              value="week"
+              onClick={exchangedValues.handleStartDate}
+              className="w-full bg-black"
+            />
+          </div>
+          <div className="border-2 border-black-500 border-solid inline">
+            <input
+              type="button"
+              value="month"
+              onClick={exchangedValues.handleStartDate}
+              className="w-full bg-black"
+            />
+          </div>
+          <div className="border-2 border-black-500 border-solid inline ">
+            <input
+              type="button"
+              value="year"
+              onClick={exchangedValues.handleStartDate}
+              className="w-full bg-black"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="ml-10 mr-5 mt-1">
+        <h1 className="">
+          Rates history between{" "}
+          {new Date(exchangedValues.startDate).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}{" "}
+          and{" "}
+          {new Date(exchangedValues.date).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}
+          :
+        </h1>
+        {exchangedValues.processedData.map((data) => (
+          <p>
+            {new Date(data.date).toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            })}
+            : {data.rate.toFixed(4)}
+          </p>
+        ))}
       </div>
     </div>
   );
