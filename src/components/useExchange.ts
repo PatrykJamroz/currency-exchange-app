@@ -120,6 +120,49 @@ export function useExchange() {
       inputTwo !== null ? parseFloat((inputTwo / rate).toFixed(4)) : null;
   }
 
+  const resultField: string = inputOneChanged
+    ? `${inputOne} ${currencyOne} equals${" "}
+${exchangedAmount}${" "}
+${currencyTwo}`
+    : `${exchangedAmount} ${currencyOne} equals${" "}
+${inputTwo}${" "}
+${currencyTwo}`;
+
+  const resultFieldDisplay =
+    inputOne !== null ? { display: "block" } : { display: "none" };
+
+  const resultFieldDate: string = new Date(date).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
+  const displayFieldPadding =
+    inputOne !== null ? { paddingTop: 0 } : { paddingTop: 41.6 };
+
+  const inputOneValue = inputOneChanged
+    ? inputOne || undefined
+    : exchangedAmount || undefined;
+
+  const inputTwoValue = !inputOneChanged
+    ? inputTwo || undefined
+    : exchangedAmount || undefined;
+
+  const ratesHistoryStartDate = new Date(startDate).toLocaleDateString(
+    "en-GB",
+    {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    }
+  );
+
+  const ratesHistoryEndDate = new Date(date).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
   return {
     currencyOneChange,
     currencyTwoChange,
@@ -136,5 +179,13 @@ export function useExchange() {
     processData,
     handleStartDate,
     startDate,
+    resultField,
+    resultFieldDisplay,
+    resultFieldDate,
+    displayFieldPadding,
+    inputOneValue,
+    inputTwoValue,
+    ratesHistoryStartDate,
+    ratesHistoryEndDate,
   };
 }
