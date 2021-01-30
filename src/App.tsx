@@ -5,7 +5,7 @@ import "./index.css";
 
 function App() {
   return (
-    <div className="container border-2 border-solid border-green-500 max-w-3xl mx-auto">
+    <div className="max-w-2xl mx-auto">
       <Logo />
       <Exchanger />
     </div>

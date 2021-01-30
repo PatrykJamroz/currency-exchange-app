@@ -8,9 +8,9 @@ export default function Exchanger() {
   const exchangedValues = useExchange();
   //console.log(exchangedValues.processedData);
   return (
-    <div className="container border-2 border-black border-solid mx-auto inline-flex flex-wrap">
-      <div className="w-full md:w-1/2 inline-flex border-2 border-purple-500 border-solid">
-        <div className="mx-auto w-10/12 mt-5 md:pl-1.5 border-2 border-green-500 border-solid">
+    <div className="mx-auto inline-flex flex-wrap w-full">
+      <div className="w-full md:w-1/2 inline-flex ">
+        <div className="w-min mx-auto">
           <div
             style={
               exchangedValues.inputOne !== null
@@ -19,7 +19,7 @@ export default function Exchanger() {
             }
             className=""
           >
-            <h3 className="font-semibold text-xl">
+            <h3 className="font-semibold text-base">
               {exchangedValues.inputOneChanged
                 ? `${exchangedValues.inputOne} ${
                     exchangedValues.currencyOne
@@ -45,10 +45,10 @@ export default function Exchanger() {
             style={
               exchangedValues.inputOne !== null
                 ? { paddingTop: 0 }
-                : { paddingTop: 47.36 }
+                : { paddingTop: 41.6 }
             }
           >
-            <div className="container mx-auto">
+            <div className="mx-auto">
               <input
                 name="inputOne"
                 type="number"
@@ -144,15 +144,12 @@ export default function Exchanger() {
           </p>
         </div>
       </div>
-      <div className="w-full md:w-1/2 border-2 border-blue-500 border-solid">
-        <div className="border-2 border-solid border-red-500 mt-5">
-          <Chart
-            data={exchangedValues.processedData}
-            className="border-solid border-yellow-500"
-          />
+      <div className="w-full md:w-1/2">
+        <div className="mt-5 w-11/12 mx-auto">
+          <Chart data={exchangedValues.processedData} className="" />
         </div>
-        <div className="border-2 border-solid border-yellow-500 grid grid-cols-3 gap-2 w-60 mx-auto text-white">
-          <div className="border-2 border-black-500 border-solid inline">
+        <div className="grid grid-cols-3 gap-2 w-60 mx-auto text-white">
+          <div className="inline">
             <input
               type="button"
               value="week"
@@ -160,7 +157,7 @@ export default function Exchanger() {
               className="w-full bg-black"
             />
           </div>
-          <div className="border-2 border-black-500 border-solid inline">
+          <div className="inline">
             <input
               type="button"
               value="month"
@@ -168,7 +165,7 @@ export default function Exchanger() {
               className="w-full bg-black"
             />
           </div>
-          <div className="border-2 border-black-500 border-solid inline ">
+          <div className="inline ">
             <input
               type="button"
               value="year"
@@ -178,8 +175,8 @@ export default function Exchanger() {
           </div>
         </div>
       </div>
-      <div className="ml-10 mr-5 mt-1">
-        <h1 className="">
+      <div className="pl-1 pr-10 mt-5 pl-2">
+        <h1 className=" text-base font-medium underline">
           Rates history between{" "}
           {new Date(exchangedValues.startDate).toLocaleDateString("en-GB", {
             day: "2-digit",
