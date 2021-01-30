@@ -38,4 +38,20 @@ describe("useExchange", () => {
     });
     expect(result.current.currencyTwo).toBe("USD");
   });
+
+  it("handle startDate", () => {
+    const { result } = renderHook(() => useExchange());
+    act(() => {
+      result.current.handleStartDate({
+        target: { value: "week" },
+      } as any);
+    });
+    expect(result.current.startDate).toBe(
+      new Date(Date.now() - 604800000)
+        .toISOString()
+        .replace(/T.*/, "")
+        .split("-")
+        .join("-")
+    );
+  });
 });

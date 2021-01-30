@@ -27,7 +27,7 @@ export function useExchange() {
     .join("-");
 
   function handleStartDate(event: React.MouseEvent<HTMLElement>): void {
-    event.preventDefault();
+    //event.preventDefault();
     const buttonVal = (event.target as HTMLInputElement).value;
     switch (buttonVal) {
       case "week":
