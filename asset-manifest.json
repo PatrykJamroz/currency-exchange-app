@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/currency-exchange-app/static/css/main.64e7babc.chunk.css",
+    "main.js": "/currency-exchange-app/static/js/main.eb54bbc5.chunk.js",
+    "main.js.map": "/currency-exchange-app/static/js/main.eb54bbc5.chunk.js.map",
+    "runtime-main.js": "/currency-exchange-app/static/js/runtime-main.c988d81b.js",
+    "runtime-main.js.map": "/currency-exchange-app/static/js/runtime-main.c988d81b.js.map",
+    "static/js/2.fb2f8917.chunk.js": "/currency-exchange-app/static/js/2.fb2f8917.chunk.js",
+    "static/js/2.fb2f8917.chunk.js.map": "/currency-exchange-app/static/js/2.fb2f8917.chunk.js.map",
+    "index.html": "/currency-exchange-app/index.html",
+    "static/css/main.64e7babc.chunk.css.map": "/currency-exchange-app/static/css/main.64e7babc.chunk.css.map",
+    "static/js/2.fb2f8917.chunk.js.LICENSE.txt": "/currency-exchange-app/static/js/2.fb2f8917.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c988d81b.js",
+    "static/js/2.fb2f8917.chunk.js",
+    "static/css/main.64e7babc.chunk.css",
+    "static/js/main.eb54bbc5.chunk.js"
+  ]
+}
