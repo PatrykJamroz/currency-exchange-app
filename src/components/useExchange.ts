@@ -1,6 +1,4 @@
 //custom hook
-
-import { stringify } from "postcss";
 import { useEffect, useState } from "react";
 import { api, Currency } from "../api";
 
@@ -9,8 +7,8 @@ export function useExchange() {
   const [inputTwo, setinputTwo] = useState<number | null>(null);
   const [currencyOne, setCurrencyOne] = useState<Currency>("EUR");
   const [currencyTwo, setCurrencyTwo] = useState<Currency>("USD");
-  const [rate, setRate] = useState(1);
-  const [date, setDate] = useState("");
+  const [rate, setRate] = useState<number>(1);
+  const [date, setDate] = useState<string>("");
   const [processedData, setprocessedData] = useState<ProcessData[]>([]);
   const [inputOneChanged, setInputOneChanged] = useState<Boolean>(false);
   const [startDate, setStartDate] = useState<string>(
@@ -19,7 +17,7 @@ export function useExchange() {
       .replace(/T.*/, "")
       .split("-")
       .join("-")
-  ); //YYYY-MM-DD, will be changed depending on period
+  );
   const todayDate: string = new Date()
     .toISOString()
     .replace(/T.*/, "")
@@ -27,7 +25,6 @@ export function useExchange() {
     .join("-");
 
   function handleStartDate(event: React.MouseEvent<HTMLElement>): void {
-    //event.preventDefault();
     const buttonVal = (event.target as HTMLInputElement).value;
     switch (buttonVal) {
       case "week":
@@ -107,7 +104,7 @@ export function useExchange() {
 
   async function getRates() {
     const data = await api(currencyOne, currencyTwo, startDate, todayDate);
-    processData(data.rates); //object of objects: {"2020-12-03":{"EUR":0.2235486106},"2020-12-23":{"EUR":0.222098834},...
+    processData(data.rates); //object of objects: {"2020-12-03":{"EUR":0.2235486106},...}
   }
 
   let exchangedAmount: number | null;
@@ -118,6 +115,59 @@ export function useExchange() {
   } else {
     exchangedAmount =
       inputTwo !== null ? parseFloat((inputTwo / rate).toFixed(4)) : null;
+  }
+
+  const resultField: string = inputOneChanged
+    ? `${inputOne} ${currencyOne} equals${" "}
+${exchangedAmount}${" "}
+${currencyTwo}`
+    : `${exchangedAmount} ${currencyOne} equals${" "}
+${inputTwo}${" "}
+${currencyTwo}`;
+
+  const resultFieldDisplay =
+    inputOne !== null || inputTwo !== null
+      ? resultField
+      : `Fill the inputs to exchange`;
+
+  const resultFieldDate: string = new Date(date).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
+  const displayFieldPadding =
+    inputOne !== null ? { paddingTop: 0 } : { paddingTop: 41.6 };
+
+  const inputOneValue = inputOneChanged
+    ? inputOne || undefined
+    : exchangedAmount || undefined;
+
+  const inputTwoValue = !inputOneChanged
+    ? inputTwo || undefined
+    : exchangedAmount || undefined;
+
+  const ratesHistoryStartDate = new Date(startDate).toLocaleDateString(
+    "en-GB",
+    {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    }
+  );
+
+  const ratesHistoryEndDate = new Date(date).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
+  function disabledOptionSelectOne(props: string) {
+    return currencyTwo === props ? true : false;
+  }
+
+  function disabledOptionSelectTwo(props: string) {
+    return currencyOne === props ? true : false;
   }
 
   return {
@@ -136,5 +186,15 @@ export function useExchange() {
     processData,
     handleStartDate,
     startDate,
+    resultField,
+    resultFieldDisplay,
+    resultFieldDate,
+    displayFieldPadding,
+    inputOneValue,
+    inputTwoValue,
+    ratesHistoryStartDate,
+    ratesHistoryEndDate,
+    disabledOptionSelectOne,
+    disabledOptionSelectTwo,
   };
 }

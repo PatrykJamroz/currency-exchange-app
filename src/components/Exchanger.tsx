@@ -1,62 +1,28 @@
 import { useExchange } from "./useExchange";
 import Chart from "./Chart";
 import "../index.css";
-import { stringify } from "postcss";
-import { getAutomaticTypeDirectiveNames } from "typescript";
 
 export default function Exchanger() {
   const exchangedValues = useExchange();
-  //console.log(exchangedValues.processedData);
+
   return (
     <div className="mx-auto inline-flex flex-wrap w-full">
-      <div className="w-full md:w-1/2 inline-flex ">
+      <div className="w-full md:w-1/2 inline-flex">
         <div className="w-min mx-auto">
-          <div
-            style={
-              exchangedValues.inputOne !== null
-                ? { display: "block" }
-                : { display: "none" }
-            }
-            className=""
-          >
+          <div className="pl-1 pt-3">
             <h3 className="font-semibold text-base">
-              {exchangedValues.inputOneChanged
-                ? `${exchangedValues.inputOne} ${
-                    exchangedValues.currencyOne
-                  } equals${" "}
-        ${exchangedValues.exchangedAmount}${" "}
-        ${exchangedValues.currencyTwo}`
-                : `${exchangedValues.exchangedAmount} ${
-                    exchangedValues.currencyOne
-                  } equals${" "}
-        ${exchangedValues.inputTwo}${" "}
-        ${exchangedValues.currencyTwo}`}
+              {exchangedValues.resultFieldDisplay}
             </h3>
             <p className="font-thin text-xs">
-              {new Date(exchangedValues.date).toLocaleDateString("en-GB", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-              })}
+              {exchangedValues.resultFieldDate}
             </p>
           </div>
-          <form
-            className="mt-2"
-            style={
-              exchangedValues.inputOne !== null
-                ? { paddingTop: 0 }
-                : { paddingTop: 41.6 }
-            }
-          >
+          <form className="mt-2">
             <div className="mx-auto">
               <input
                 name="inputOne"
                 type="number"
-                value={
-                  exchangedValues.inputOneChanged
-                    ? exchangedValues.inputOne || undefined
-                    : exchangedValues.exchangedAmount || undefined
-                }
+                value={exchangedValues.inputOneValue}
                 onChange={exchangedValues.inputOneChange}
                 placeholder="0"
                 className="w-36 rounded-lg mr-2"
@@ -69,25 +35,25 @@ export default function Exchanger() {
               >
                 <option
                   value="EUR"
-                  disabled={
-                    exchangedValues.currencyTwo === "EUR" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectOne("EUR")}
                 >
                   EUR
                 </option>
                 <option
+                  value="GBP"
+                  disabled={exchangedValues.disabledOptionSelectOne("GBP")}
+                >
+                  GBP
+                </option>
+                <option
                   value="USD"
-                  disabled={
-                    exchangedValues.currencyTwo === "USD" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectOne("USD")}
                 >
                   USD
                 </option>
                 <option
                   value="PLN"
-                  disabled={
-                    exchangedValues.currencyTwo === "PLN" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectOne("PLN")}
                 >
                   PLN
                 </option>
@@ -97,11 +63,7 @@ export default function Exchanger() {
               <input
                 name="inputTwo"
                 type="number"
-                value={
-                  !exchangedValues.inputOneChanged
-                    ? exchangedValues.inputTwo || undefined
-                    : exchangedValues.exchangedAmount || undefined
-                }
+                value={exchangedValues.inputTwoValue}
                 onChange={exchangedValues.inputTwoChange}
                 placeholder="0"
                 className="w-36 rounded-lg mr-2"
@@ -113,25 +75,25 @@ export default function Exchanger() {
               >
                 <option
                   value="USD"
-                  disabled={
-                    exchangedValues.currencyOne === "USD" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectTwo("USD")}
                 >
                   USD
                 </option>
                 <option
                   value="PLN"
-                  disabled={
-                    exchangedValues.currencyOne === "PLN" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectTwo("PLN")}
                 >
                   PLN
                 </option>
                 <option
+                  value="GBP"
+                  disabled={exchangedValues.disabledOptionSelectTwo("GBP")}
+                >
+                  GPB
+                </option>
+                <option
                   value="EUR"
-                  disabled={
-                    exchangedValues.currencyOne === "EUR" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectTwo("EUR")}
                 >
                   EUR
                 </option>
@@ -139,7 +101,7 @@ export default function Exchanger() {
             </div>
           </form>
 
-          <p className="mt-4 font-thin text-xs">
+          <p className="mt-4 font-thin text-xs pl-1">
             source: <a href="https://exchangeratesapi.io/">exchangeratesapi</a>
           </p>
         </div>
@@ -177,19 +139,8 @@ export default function Exchanger() {
       </div>
       <div className="pl-1 pr-10 mt-5 pl-2">
         <h1 className=" text-base font-medium underline">
-          Rates history between{" "}
-          {new Date(exchangedValues.startDate).toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          })}{" "}
-          and{" "}
-          {new Date(exchangedValues.date).toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          })}
-          :
+          Rates history between {exchangedValues.ratesHistoryStartDate} and{" "}
+          {exchangedValues.ratesHistoryEndDate}:
         </h1>
         {exchangedValues.processedData.map((data) => (
           <p>
