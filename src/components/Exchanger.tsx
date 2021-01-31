@@ -143,7 +143,7 @@ export default function Exchanger() {
           {exchangedValues.ratesHistoryEndDate}:
         </h1>
         {exchangedValues.processedData.map((data) => (
-          <p>
+          <p key={data.date}>
             {new Date(data.date).toLocaleDateString("en-GB", {
               day: "2-digit",
               month: "short",
