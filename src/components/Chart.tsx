@@ -8,7 +8,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { reduceEachLeadingCommentRange } from "typescript";
 
 export default function Chart(props: any) {
   const SimpleAreaChart = (

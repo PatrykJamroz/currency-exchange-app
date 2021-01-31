@@ -7,17 +7,17 @@ export default function Exchanger() {
 
   return (
     <div className="mx-auto inline-flex flex-wrap w-full">
-      <div className="w-full md:w-1/2 inline-flex ">
+      <div className="w-full md:w-1/2 inline-flex">
         <div className="w-min mx-auto">
-          <div style={exchangedValues.resultFieldDisplay}>
+          <div className="pl-1 pt-3">
             <h3 className="font-semibold text-base">
-              {exchangedValues.resultField}
+              {exchangedValues.resultFieldDisplay}
             </h3>
             <p className="font-thin text-xs">
               {exchangedValues.resultFieldDate}
             </p>
           </div>
-          <form className="mt-2" style={exchangedValues.displayFieldPadding}>
+          <form className="mt-2">
             <div className="mx-auto">
               <input
                 name="inputOne"
@@ -35,25 +35,25 @@ export default function Exchanger() {
               >
                 <option
                   value="EUR"
-                  disabled={
-                    exchangedValues.currencyTwo === "EUR" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectOne("EUR")}
                 >
                   EUR
                 </option>
                 <option
+                  value="GBP"
+                  disabled={exchangedValues.disabledOptionSelectOne("GBP")}
+                >
+                  GBP
+                </option>
+                <option
                   value="USD"
-                  disabled={
-                    exchangedValues.currencyTwo === "USD" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectOne("USD")}
                 >
                   USD
                 </option>
                 <option
                   value="PLN"
-                  disabled={
-                    exchangedValues.currencyTwo === "PLN" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectOne("PLN")}
                 >
                   PLN
                 </option>
@@ -75,25 +75,25 @@ export default function Exchanger() {
               >
                 <option
                   value="USD"
-                  disabled={
-                    exchangedValues.currencyOne === "USD" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectTwo("USD")}
                 >
                   USD
                 </option>
                 <option
                   value="PLN"
-                  disabled={
-                    exchangedValues.currencyOne === "PLN" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectTwo("PLN")}
                 >
                   PLN
                 </option>
                 <option
+                  value="GBP"
+                  disabled={exchangedValues.disabledOptionSelectTwo("GBP")}
+                >
+                  GPB
+                </option>
+                <option
                   value="EUR"
-                  disabled={
-                    exchangedValues.currencyOne === "EUR" ? true : false
-                  }
+                  disabled={exchangedValues.disabledOptionSelectTwo("EUR")}
                 >
                   EUR
                 </option>
@@ -101,7 +101,7 @@ export default function Exchanger() {
             </div>
           </form>
 
-          <p className="mt-4 font-thin text-xs">
+          <p className="mt-4 font-thin text-xs pl-1">
             source: <a href="https://exchangeratesapi.io/">exchangeratesapi</a>
           </p>
         </div>
