@@ -7,15 +7,21 @@ export default function Exchanger() {
 
   return (
     <div className="mx-auto inline-flex flex-wrap w-full">
-      <div className="w-full md:w-1/2 inline-flex">
+      <div className="w-full inline-flex">
         <div className="w-min mx-auto">
           <div className="pl-1 pt-3">
             <h3 className="font-semibold text-base">
               {exchangedValues.resultFieldDisplay}
             </h3>
-            <p className="font-thin text-xs">{exchangedValues.startDate}</p>
           </div>
           <form className="mt-2">
+            <input
+              type="date"
+              name="date"
+              value={exchangedValues.startDate}
+              onChange={(e) => exchangedValues.setStartDate(e.target.value)}
+              className="rounded-lg mb-2"
+            />
             <div className="mx-auto">
               <input
                 name="inputOne"
@@ -30,6 +36,7 @@ export default function Exchanger() {
                 value={exchangedValues.currencyOne}
                 onChange={exchangedValues.currencyOneChange}
                 className="w-36 rounded-lg"
+                disabled
               >
                 <option
                   value="EUR"
@@ -102,54 +109,12 @@ export default function Exchanger() {
           <p className="mt-4 font-thin text-xs pl-1">
             source: <a href="https://exchangeratesapi.io/">exchangeratesapi</a>
           </p>
-        </div>
-      </div>
-      <div className="w-full md:w-1/2">
-        <div className="mt-5 w-11/12 mx-auto">
-          <Chart data={exchangedValues.processedData} className="" />
-        </div>
-        <div className="grid grid-cols-3 gap-2 w-60 mx-auto text-white">
-          <div className="inline">
-            <input
-              type="button"
-              value="week"
-              onClick={exchangedValues.handleStartDate}
-              className="w-full bg-black"
-            />
-          </div>
-          <div className="inline">
-            <input
-              type="button"
-              value="month"
-              onClick={exchangedValues.handleStartDate}
-              className="w-full bg-black"
-            />
-          </div>
-          <div className="inline ">
-            <input
-              type="button"
-              value="year"
-              onClick={exchangedValues.handleStartDate}
-              className="w-full bg-black"
-            />
-          </div>
-        </div>
-      </div>
-      <div className="pl-1 pr-10 mt-5 pl-2">
-        <h1 className=" text-base font-medium underline">
-          Rates history between {exchangedValues.ratesHistoryStartDate} and{" "}
-          {exchangedValues.ratesHistoryEndDate}:
-        </h1>
-        {exchangedValues.processedData.map((data) => (
-          <p key={data.date}>
-            {new Date(data.date).toLocaleDateString("en-GB", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            })}
-            : {data.rate.toFixed(4)}
+          <p className="mt-4 font-thin text-xs max-w-xs">
+            Due to exchangeratesapi is no longer completely free it was needed
+            to remove change of the base currency and historical rates list and
+            the chart in this verion of the app.
           </p>
-        ))}
+        </div>
       </div>
     </div>
   );

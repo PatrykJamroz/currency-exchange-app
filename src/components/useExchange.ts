@@ -60,7 +60,7 @@ export function useExchange() {
 
   useEffect(() => {
     getRates();
-  }, [currencyOne, currencyTwo]);
+  }, [currencyOne, currencyTwo, startDate]);
 
   function inputOneChange(e: React.FormEvent<HTMLInputElement>) {
     setinputOne(Number(e.currentTarget.value));
@@ -185,6 +185,7 @@ ${currencyTwo}`;
     processData,
     handleStartDate,
     startDate,
+    setStartDate,
     resultField,
     resultFieldDisplay,
     resultFieldDate,
