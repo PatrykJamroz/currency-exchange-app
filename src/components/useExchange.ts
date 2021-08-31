@@ -8,55 +8,10 @@ export function useExchange() {
   const [currencyOne, setCurrencyOne] = useState<Currency>("EUR");
   const [currencyTwo, setCurrencyTwo] = useState<Currency>("USD");
   const [rate, setRate] = useState<number>(1);
-  const [date, setDate] = useState<string>("");
-  const [processedData, setprocessedData] = useState<ProcessData[]>([]);
   const [inputOneChanged, setInputOneChanged] = useState<Boolean>(false);
   const [startDate, setStartDate] = useState<string>(
     new Date().toISOString().replace(/T.*/, "").split("-").join("-")
   );
-  const todayDate: string = new Date()
-    .toISOString()
-    .replace(/T.*/, "")
-    .split("-")
-    .join("-");
-
-  function handleStartDate(event: React.MouseEvent<HTMLElement>): void {
-    const buttonVal = (event.target as HTMLInputElement).value;
-    switch (buttonVal) {
-      case "week":
-        setStartDate(
-          new Date(Date.now() - 604800000)
-            .toISOString()
-            .replace(/T.*/, "")
-            .split("-")
-            .join("-")
-        );
-        break;
-      case "month":
-        setStartDate(
-          new Date(Date.now() - 2629800000)
-            .toISOString()
-            .replace(/T.*/, "")
-            .split("-")
-            .join("-")
-        );
-        break;
-      case "year":
-        setStartDate(
-          new Date(Date.now() - 31557600000)
-            .toISOString()
-            .replace(/T.*/, "")
-            .split("-")
-            .join("-")
-        );
-        break;
-    }
-  }
-
-  interface ProcessData {
-    date: string;
-    rate: number;
-  }
 
   useEffect(() => {
     getRates();
@@ -80,23 +35,7 @@ export function useExchange() {
     setCurrencyTwo(e.currentTarget.value as Currency);
   }
 
-  type Rates = Record<Currency, number>;
-
   function processData(data: any) {
-    // const sortedArrOfObj = Object.entries(data)
-    //   .map(([key, value]) => ({
-    //     date: key,
-    //     rate: value[currencyTwo],
-    //   }))
-    //   .sort((a, b) => {
-    //     let x = a.date;
-    //     let y = b.date;
-    //     return x < y ? -1 : x > y ? 1 : 0;
-    //   });
-    // setRate(sortedArrOfObj[sortedArrOfObj.length - 1].rate);
-    // setDate(sortedArrOfObj[sortedArrOfObj.length - 1].date);
-    // setprocessedData(sortedArrOfObj);
-    console.log(data);
     const rate = data[currencyTwo];
     setRate(rate);
   }
@@ -129,12 +68,6 @@ ${currencyTwo}`;
       ? resultField
       : `Fill the inputs to exchange`;
 
-  const resultFieldDate: string = new Date(date).toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-
   const displayFieldPadding =
     inputOne !== null ? { paddingTop: 0 } : { paddingTop: 41.6 };
 
@@ -145,21 +78,6 @@ ${currencyTwo}`;
   const inputTwoValue = !inputOneChanged
     ? inputTwo || undefined
     : exchangedAmount || undefined;
-
-  const ratesHistoryStartDate = new Date(startDate).toLocaleDateString(
-    "en-GB",
-    {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    }
-  );
-
-  const ratesHistoryEndDate = new Date(date).toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
 
   function disabledOptionSelectOne(props: string) {
     return currencyTwo === props ? true : false;
@@ -179,21 +97,15 @@ ${currencyTwo}`;
     exchangedAmount,
     inputOneChange,
     inputTwoChange,
-    date,
     inputOneChanged,
-    processedData,
     processData,
-    handleStartDate,
     startDate,
     setStartDate,
     resultField,
     resultFieldDisplay,
-    resultFieldDate,
     displayFieldPadding,
     inputOneValue,
     inputTwoValue,
-    ratesHistoryStartDate,
-    ratesHistoryEndDate,
     disabledOptionSelectOne,
     disabledOptionSelectTwo,
   };

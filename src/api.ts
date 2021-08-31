@@ -1,5 +1,3 @@
-import { start } from "repl";
-
 export type Currency = "USD" | "EUR" | "PLN";
 
 export type Rates = Record<Currency, number>;
@@ -21,5 +19,3 @@ export async function api(
   const res = await fetch(url);
   return res.json();
 }
-
-// legacy url: `https://api.exchangeratesapi.io/history?start_at=${startDate}&end_at=${todayDate}&base=${fromCurrency}&symbols=${toCurrency}`

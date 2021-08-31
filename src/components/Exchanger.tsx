@@ -1,5 +1,4 @@
 import { useExchange } from "./useExchange";
-import Chart from "./Chart";
 import "../index.css";
 
 export default function Exchanger() {
