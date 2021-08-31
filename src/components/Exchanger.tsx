@@ -13,9 +13,7 @@ export default function Exchanger() {
             <h3 className="font-semibold text-base">
               {exchangedValues.resultFieldDisplay}
             </h3>
-            <p className="font-thin text-xs">
-              {exchangedValues.resultFieldDate}
-            </p>
+            <p className="font-thin text-xs">{exchangedValues.startDate}</p>
           </div>
           <form className="mt-2">
             <div className="mx-auto">

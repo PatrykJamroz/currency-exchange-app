@@ -12,11 +12,7 @@ export function useExchange() {
   const [processedData, setprocessedData] = useState<ProcessData[]>([]);
   const [inputOneChanged, setInputOneChanged] = useState<Boolean>(false);
   const [startDate, setStartDate] = useState<string>(
-    new Date(Date.now() - 604800000)
-      .toISOString()
-      .replace(/T.*/, "")
-      .split("-")
-      .join("-")
+    new Date().toISOString().replace(/T.*/, "").split("-").join("-")
   );
   const todayDate: string = new Date()
     .toISOString()
@@ -64,7 +60,7 @@ export function useExchange() {
 
   useEffect(() => {
     getRates();
-  }, [currencyOne, currencyTwo, startDate]);
+  }, [currencyOne, currencyTwo]);
 
   function inputOneChange(e: React.FormEvent<HTMLInputElement>) {
     setinputOne(Number(e.currentTarget.value));
@@ -86,25 +82,28 @@ export function useExchange() {
 
   type Rates = Record<Currency, number>;
 
-  function processData(data: Record<string, Rates>) {
-    const sortedArrOfObj = Object.entries(data)
-      .map(([key, value]) => ({
-        date: key,
-        rate: value[currencyTwo],
-      }))
-      .sort((a, b) => {
-        let x = a.date;
-        let y = b.date;
-        return x < y ? -1 : x > y ? 1 : 0;
-      });
-    setRate(sortedArrOfObj[sortedArrOfObj.length - 1].rate);
-    setDate(sortedArrOfObj[sortedArrOfObj.length - 1].date);
-    setprocessedData(sortedArrOfObj);
+  function processData(data: any) {
+    // const sortedArrOfObj = Object.entries(data)
+    //   .map(([key, value]) => ({
+    //     date: key,
+    //     rate: value[currencyTwo],
+    //   }))
+    //   .sort((a, b) => {
+    //     let x = a.date;
+    //     let y = b.date;
+    //     return x < y ? -1 : x > y ? 1 : 0;
+    //   });
+    // setRate(sortedArrOfObj[sortedArrOfObj.length - 1].rate);
+    // setDate(sortedArrOfObj[sortedArrOfObj.length - 1].date);
+    // setprocessedData(sortedArrOfObj);
+    console.log(data);
+    const rate = data[currencyTwo];
+    setRate(rate);
   }
 
   async function getRates() {
-    const data = await api(currencyOne, currencyTwo, startDate, todayDate);
-    processData(data.rates); //object of objects: {"2020-12-03":{"EUR":0.2235486106},...}
+    const data = await api(currencyOne, currencyTwo, startDate);
+    processData(data.rates);
   }
 
   let exchangedAmount: number | null;
