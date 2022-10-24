@@ -1,3 +1,4 @@
+import React from "react";
 import { useExchange } from "./useExchange";
 import "../index.css";
 
@@ -109,11 +110,21 @@ export default function Exchanger() {
           <p className="mt-4 font-thin text-xs pl-1">
             source: <a href="https://exchangeratesapi.io/">exchangeratesapi</a>
           </p>
-          <p className="mt-4 font-thin text-xs max-w-xs">
-            Due to exchangeratesapi is no longer completely free it was needed
-            to remove change of the base currency and historical rates list and
-            the chart in this verion of the app.
+          <p className="mt-4 text-xs max-w-xs">
+            Due to exchangeratesapi is no longer completely free there were some
+            changes introduced:
           </p>
+
+          <ul className="font-thin text-xs max-w-xs">
+            <li>- removed historical rates list</li>
+            <li>- disabled possibility to change base currency</li>
+            <li>
+              - https protocol is not supported in free plan so app does not
+              work on Chrome browser. Workaround is to use Brave browser with
+              site setting "Insecure content" set to "allow" or Firefox browser
+              with disabled protection (on your own risk).
+            </li>
+          </ul>
         </div>
       </div>
     </div>
