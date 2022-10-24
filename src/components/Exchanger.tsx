@@ -20,6 +20,7 @@ export default function Exchanger() {
               value={exchangedValues.startDate}
               onChange={(e) => exchangedValues.setStartDate(e.target.value)}
               className="rounded-lg mb-2"
+              max={exchangedValues.dateToday}
             />
             <div className="mx-auto">
               <input

@@ -9,9 +9,12 @@ export function useExchange() {
   const [currencyTwo, setCurrencyTwo] = useState<Currency>("USD");
   const [rate, setRate] = useState<number>(1);
   const [inputOneChanged, setInputOneChanged] = useState<Boolean>(false);
-  const [startDate, setStartDate] = useState<string>(
-    new Date().toISOString().replace(/T.*/, "").split("-").join("-")
-  );
+  const dateToday = new Date()
+    .toISOString()
+    .replace(/T.*/, "")
+    .split("-")
+    .join("-");
+  const [startDate, setStartDate] = useState<string>(dateToday);
 
   useEffect(() => {
     getRates();
@@ -108,5 +111,6 @@ ${currencyTwo}`;
     inputTwoValue,
     disabledOptionSelectOne,
     disabledOptionSelectTwo,
+    dateToday,
   };
 }
